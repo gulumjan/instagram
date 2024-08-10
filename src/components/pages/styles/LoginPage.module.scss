@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+.Login {
+  h1 {
+    font-family: "Oswald";
+    font-size: 54px;
+    font-weight: 400;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .content {
+    padding: 73px 0;
+    margin-top: 79px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: 400px;
+    height: 600px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 23px;
+      input {
+        width: 58vh;
+        height: 43px;
+        padding-left: 9px;
+        outline: none;
+      }
+      button {
+        width: 58vh;
+        height: 43px;
+        border-radius: 12px;
+        border: none;
+        background: #668bf2;
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+    h1 {
+      padding: 0 0 23px 0;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .account {
+    margin-top: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+
+    width: 420px;
+    height: 70px;
+    padding: 17px 0 0 12px;
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+  .facebook {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    span {
+      color: #2860fb;
+    }
+  }
+}

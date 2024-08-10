@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+.Register {
+  .inst {
+    h1 {
+      font-family: "Oswald";
+      font-size: 54px;
+      font-weight: 400;
+      text-align: center;
+    }
+    p {
+      opacity: 0.8;
+      font-family: Montserrat;
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: -40px;
+  .content {
+    padding: 73px 0;
+    margin-top: 79px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 400px;
+    height: 890px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    .facebook {
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 58vh;
+        height: 43px;
+        border-radius: 12px;
+        border: none;
+        background: #1251fc;
+        color: #fff;
+        font-size: 16px;
+        gap: 5px;
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      input {
+        width: 58vh;
+        height: 43px;
+        padding-left: 9px;
+        outline: none;
+      }
+      .rules {
+        p {
+          opacity: 0.8;
+          font-family: Montserrat;
+          font-size: 15px;
+        }
+      }
+      button {
+        width: 58vh;
+        height: 43px;
+        border-radius: 12px;
+        border: none;
+        background: #668bf2;
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+    h1 {
+      padding: 0 0 23px 0;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .account {
+    margin-top: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+
+    width: 420px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+  .facebook {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    span {
+      color: #2860fb;
+    }
+  }
+}
