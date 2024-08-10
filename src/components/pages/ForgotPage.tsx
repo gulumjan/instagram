@@ -88,14 +88,14 @@ const ForgotPassword = () => {
           <div className={scss.facebook}>
             <Link
               style={{ textDecorationLine: "none", color: "#000" }}
-              href="auth/register"
+              href="/auth/sign-up"
             >
               Создать новый аккаунт
             </Link>
           </div>
         </div>
         <div className={scss.account}>
-          <Link href="auth/sign-in">Вернуться к входу</Link>
+          <Link href="/auth/sign-in">Вернуться к входу</Link>
         </div>
       </div>
     </div>
