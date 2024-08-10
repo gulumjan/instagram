@@ -56,4 +56,19 @@ namespace AUTH {
   type ForgotPasswordResponse = {
     message: string;
   };
+  type ResetPasswordResponse = {
+    message: string;
+  };
+  type ResetPasswordRequest = {
+    token: string;
+    newPassword: string;
+  };
+  type RefreshTokenResponse = {
+    accesToken: string;
+    accessTokenExpiration: string;
+    refreshToken: string;
+  };
+  type RefreshTokenRequest = {
+    refreshToken: string;
+  };
 }

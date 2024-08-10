@@ -84,7 +84,7 @@ const LoginPage = () => {
               textDecoration: "none",
               color: "#668bf2",
             }}
-            href="/forgot"
+            href="/auth/forgot"
           >
             Забыли пароль ?
           </a>
@@ -93,7 +93,7 @@ const LoginPage = () => {
       <div className={scss.account}>
         <p>
           У вас ещё нет аккаунта?{" "}
-          <a href="/register" style={{ color: "#2860fb" }}>
+          <a href="/auth/sign-up" style={{ color: "#2860fb" }}>
             Зарегистироваться
           </a>
         </p>

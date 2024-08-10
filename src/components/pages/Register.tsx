@@ -114,16 +114,22 @@ const Register = () => {
                 Люди, которые пользуются нашим сервисом, <br /> могли загрузить
                 вашу контактную информацию <br /> в Instagram.
                 <span style={{ color: "#668bf2" }}>
-                  <Link href="https://www.facebook.com/help/instagram/261704639352628">
+                  <Link
+                    style={{ textDecorationLine: "none", color: "#2860fb" }}
+                    href="https://www.facebook.com/help/instagram/261704639352628"
+                  >
                     Подробнее
                   </Link>
                 </span>
               </p>
               <p>
                 Регистрируясь, вы принимаете наши{" "}
-                <span style={{ color: "#668bf2" }}>
+                <span style={{ color: "#2860fb" }}>
                   Условия <br />
-                  <Link href="https://privacycenter.instagram.com/policies/cookies/">
+                  <Link
+                    style={{ textDecorationLine: "none", color: "#2860fb" }}
+                    href="https://privacycenter.instagram.com/policies/cookies/"
+                  >
                     {" "}
                     Политику конфиденциальности и Политику <br /> в отношении
                     файлов cookie.
@@ -138,7 +144,7 @@ const Register = () => {
       <div className={scss.account}>
         <p>
           Есть аккаунт?{" "}
-          <a href="/login" style={{ color: "#2860fb" }}>
+          <a href="/auth/sign-in" style={{ color: "#2860fb" }}>
             Вход
           </a>
         </p>

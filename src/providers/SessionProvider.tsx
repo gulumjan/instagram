@@ -1,51 +1,69 @@
-// // components/SessionProvider.tsx
-// import axios from "axios";
-// import { FC, ReactNode, useEffect } from "react";
-// import { useRouter } from "next/router";
+"use client";
+import { FC, ReactNode, useEffect, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useGetUserQuery, useRefreshTokenMutation } from "@/redux/api/auth";
 
-// interface SessionProviderProps {
-//   children: ReactNode;
-// }
+interface SessionProviderProps {
+  children: ReactNode;
+}
 
-// const URL = process.env.BACKEND_API;
+export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+  const { status } = useGetUserQuery();
+  const [refreshToken] = useRefreshTokenMutation();
+  const pathname = usePathname();
+  const router = useRouter();
 
-// const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-//   const router = useRouter();
+  const handleRefreshToken = useCallback(async () => {
+    const localStorageData = JSON.parse(
+      String(localStorage.getItem("tokens")) || ""
+    );
+    if (!localStorageData) {
+      localStorage.removeItem("tokens");
+      return;
+    }
 
-//   const checkSession = async () => {
-//     const localStorageData = JSON.parse(localStorage.getItem("tokens") || "{}");
-//     if (localStorageData && localStorageData.accesTokenExpiration) {
-//       if (localStorageData.accesTokenExpiration <= new Date().getTime()) {
-//         const { data: responseData } = await axios.patch(
-//           `${URL}/auth/refresh`,
-//           {
-//             refreshToken: localStorageData.refreshToken,
-//           }
-//         );
-//         localStorage.removeItem("tokens");
-//         localStorage.setItem("tokens", JSON.stringify(responseData));
-//         router.reload();
-//       } else {
-//         alert(`AccessToken is alive`);
-//       }
-//     }
-//   };
+    const { accessTokenExpiration, refreshToken } = localStorageData;
+    console.log(localStorageData);
 
-//   useEffect(() => {
-//     checkSession();
-//   }, [router.pathname]);
+    if (accessTokenExpiration < new Date().getTime()) {
+      const { data, error } = await refreshToken({ refreshToken });
+      console.log(data);
+      console.log(error);
+      localStorage.setItem("tokens", JSON.stringify(data));
+    } else {
+      console.log("Токен живой!");
+    }
+  }, [refreshToken]);
 
-//   return <>{children}</>;
-// };
+  const handleNavigation = useCallback(async () => {
+    if (status === "rejected") {
+      await handleRefreshToken();
+    }
 
-// export default SessionProvider;
+    switch (pathname) {
+      case "/auth/sign-in":
+      case "/auth/sign-up":
+      case "/auth/reset-password":
+      case "/auth/forgot":
+        if (status === "fulfilled") {
+          router.push("/");
+        }
+        break;
+      case "/":
+      case "/post":
+      case "/profile":
+        if (status === "rejected") {
+          router.push("/auth/sign-in");
+        }
+        break;
+      default:
+        break;
+    }
+  }, [status, pathname, router, handleRefreshToken]);
 
-// import { store } from "@/redux/store";
-// import React from "react";
-// import { Provider } from "react-redux";
+  useEffect(() => {
+    handleNavigation();
+  }, [handleNavigation]);
 
-// const SessionProvider = ({ childen }) => {
-//   return <Provider store={store}></Provider>;
-// };
-
-// export default SessionProvider;
+  return <>{children}</>;
+};

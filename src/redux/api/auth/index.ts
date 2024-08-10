@@ -54,6 +54,28 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
+    resetPassword: builder.mutation<
+      AUTH.ResetPasswordResponse,
+      AUTH.ResetPasswordRequest
+    >({
+      query: (data) => ({
+        url: `/auth/reset-password`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    refreshToken: builder.mutation<
+      AUTH.RefreshTokenResponse,
+      AUTH.RefreshTokenRequest
+    >({
+      query: (data) => ({
+        url: `/auth/refresh`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
   }),
 });
 
@@ -63,4 +85,6 @@ export const {
   usePostLoginUserMutation,
   usePostRegisterUserMutation,
   useForgotpasswordMutation,
+  useResetPasswordMutation,
+  useRefreshTokenMutation,
 } = api;

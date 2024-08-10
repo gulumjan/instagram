@@ -1,17 +1,11 @@
 "use client";
 import scss from "./styles/ForgorPassword.module.scss";
 import React from "react";
-import Image from "next/image";
-import { AiFillFacebook } from "react-icons/ai";
 import { SubmitHandler, useForm } from "react-hook-form";
 import LockResetIcon from "@mui/icons-material/LockReset";
-import { IconButton } from "@mui/material";
 import { useForgotpasswordMutation } from "@/redux/api/auth";
 import Link from "next/link";
 
-interface IFormPass {
-  email: string;
-}
 const ForgotPassword = () => {
   const { register, handleSubmit } = useForm<AUTH.ForgotPasswordRequest>();
   const [forgotpassword] = useForgotpasswordMutation();
@@ -94,14 +88,14 @@ const ForgotPassword = () => {
           <div className={scss.facebook}>
             <Link
               style={{ textDecorationLine: "none", color: "#000" }}
-              href="/register"
+              href="auth/register"
             >
               Создать новый аккаунт
             </Link>
           </div>
         </div>
         <div className={scss.account}>
-          <Link href="/login">Вернуться к входу</Link>
+          <Link href="auth/sign-in">Вернуться к входу</Link>
         </div>
       </div>
     </div>
