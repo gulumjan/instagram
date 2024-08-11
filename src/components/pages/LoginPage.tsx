@@ -19,8 +19,8 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<AUTH.PostLoginRequest> = async (data) => {
     console.log(data);
     try {
-      const { data: responsedata } = await postLoginUser(data);
-      console.log(responsedata);
+      const responsedata = await postLoginUser(data);
+      console.log(responsedata, "response");
     } catch (error) {
       alert(error);
     }

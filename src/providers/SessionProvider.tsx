@@ -8,58 +8,87 @@ interface SessionProviderProps {
 }
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-  const { status } = useGetUserQuery();
+  const {
+    data: user,
+    error: userError,
+    status,
+    isLoading,
+    isError,
+  } = useGetUserQuery([]);
   const [refreshToken] = useRefreshTokenMutation();
   const pathname = usePathname();
   const router = useRouter();
 
   const handleRefreshToken = useCallback(async () => {
-    const localStorageData = JSON.parse(
-      String(localStorage.getItem("tokens")) || ""
-    );
-    if (!localStorageData) {
+    const tokens = localStorage.getItem("tokens");
+    if (!tokens) {
       localStorage.removeItem("tokens");
       return;
     }
 
-    const { accessTokenExpiration, refreshToken } = localStorageData;
-    console.log(localStorageData);
+    let localStorageData;
+    try {
+      localStorageData = JSON.parse(tokens);
+    } catch (error) {
+      console.error("Failed to parse tokens:", error);
+      localStorage.removeItem("tokens");
+      return;
+    }
 
-    if (accessTokenExpiration < new Date().getTime()) {
-      const { data, error } = await refreshToken({ refreshToken });
-      console.log(data);
-      console.log(error);
-      localStorage.setItem("tokens", JSON.stringify(data));
+    const { accessTokenExpiration, refreshToken: storedRefreshToken } =
+      localStorageData || {};
+    if (accessTokenExpiration && accessTokenExpiration < new Date().getTime()) {
+      const { data, error } = await refreshToken({
+        refreshToken: storedRefreshToken,
+      });
+      if (data) {
+        localStorage.setItem("tokens", JSON.stringify(data));
+      } else {
+        console.error("Failed to refresh token:", error);
+        localStorage.removeItem("tokens");
+      }
     } else {
-      console.log("Токен живой!");
+      console.log("Token is still valid.");
     }
   }, [refreshToken]);
 
   const handleNavigation = useCallback(async () => {
-    if (status === "rejected") {
+    if (isError) {
+      console.error("Failed to fetch user data:", userError);
       await handleRefreshToken();
     }
 
-    switch (pathname) {
-      case "/auth/sign-in":
-      case "/auth/sign-up":
-      case "/auth/reset-password":
-      case "/auth/forgot":
-        if (status === "fulfilled") {
-          router.push("/");
-        }
-        break;
-      case "/":
-      case "/post":
-      case "/profile":
-        if (status === "rejected") {
-          router.push("/auth/sign-in");
-        }
-        break;
-      default:
-        break;
+    if (!isLoading) {
+      switch (pathname) {
+        case "/auth/sign-in":
+        case "/auth/sign-up":
+        case "/auth/reset-password":
+        case "/auth/forgot":
+          if (status === "fulfilled" && user) {
+            router.push("/");
+          }
+          break;
+        case "/":
+        case "/post":
+        case "/profile":
+          if (isError) {
+            router.push("/auth/sign-in");
+          }
+          break;
+        default:
+          break;
+      }
     }
-  }, [status, pathname, router, handleRefreshToken]);
+  }, [
+    status,
+    isLoading,
+    isError,
+    user,
+    pathname,
+    router,
+    handleRefreshToken,
+    userError,
+  ]);
 
   useEffect(() => {
     handleNavigation();
