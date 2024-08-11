@@ -8,6 +8,7 @@ import { usePostRegisterUserMutation } from "@/redux/api/auth";
 import Link from "next/link";
 import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { log } from "console";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "100" });
 
@@ -19,8 +20,9 @@ const Register = () => {
   const onSubmit: SubmitHandler<AUTH.PostRegisterRequest> = async (data) => {
     console.log(data);
     try {
-      await postRegisterUser(data).unwrap();
+      const response = await postRegisterUser(data).unwrap();
       console.log("Registration successful");
+      localStorage.setItem("tokens", JSON.stringify(response));
     } catch (error) {
       console.error("Failed to register", error);
     }

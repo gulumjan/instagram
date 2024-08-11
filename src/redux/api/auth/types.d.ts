@@ -35,6 +35,7 @@ namespace AUTH {
   interface PostLoginRequest {
     email: string;
     password: string;
+    token: string;
   }
   interface logoutUserResponse {
     id: string;

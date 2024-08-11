@@ -21,6 +21,7 @@ const LoginPage = () => {
     try {
       const responsedata = await postLoginUser(data);
       console.log(responsedata, "response");
+      localStorage.setItem("tokens", JSON.stringify(responsedata.data));
     } catch (error) {
       alert(error);
     }

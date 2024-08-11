@@ -65,14 +65,14 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
-    refreshToken: builder.mutation<
+    refreshAccesToken: builder.mutation<
       AUTH.RefreshTokenResponse,
       AUTH.RefreshTokenRequest
     >({
-      query: (data) => ({
+      query: ({ refreshToken }) => ({
         url: `/auth/refresh`,
         method: "PATCH",
-        body: data,
+        body: { refreshToken },
       }),
       invalidatesTags: ["auth"],
     }),
@@ -86,5 +86,5 @@ export const {
   usePostRegisterUserMutation,
   useForgotpasswordMutation,
   useResetPasswordMutation,
-  useRefreshTokenMutation,
+  useRefreshAccesTokenMutation,
 } = api;
